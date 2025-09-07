@@ -1,6 +1,8 @@
 const categoryContainer = document.getElementById("category-container");
 const treeContainer = document.getElementById("tree-container");
 const allTree = document.getElementById("all-tree");
+const totalContainer = document.getElementById("total-container");
+
 // load category
 
 const loadAllTree = () => {
@@ -8,27 +10,24 @@ const loadAllTree = () => {
 	fetch(url)
 		.then(res => res.json())
 		.then(elements => {
-			console.log(elements);
+			// console.log(elements);
 			treeContainer.innerHTML = "";
 			for (let element of elements.plants) {
-				// console.log(element);
-				// document.getElementById("all-tree").addEventListener("click", () => {
 				treeContainer.innerHTML += `
-                 <div class="bg-white shadow-md rounded-lg h-[490px]">
+                 <div class="bg-white shadow-md rounded-lg h-[490px] card-parent">
                 <div class="p-4">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${element.image}" />
 
-                <h1 class="text-lg font-bold mt-3">${element.name}</h1>
+                <h1 class="text-lg font-bold mt-3 name">${element.name}</h1>
                 <p class="text-sm text-[#1f2937] my-2">${element.description}</p>
                 <div class="flex justify-between">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${element.category}</h1>
-                <p>${element.price}</p>
+                <p class="price">${element.price}</p>
                 </div>
                 <button class="bg-[#15803d] w-full text-white mt-3 py-2 rounded-full">Add to Cart</button>
                 </div>
                 </div>
                 `;
-				// });
 			}
 		});
 };
@@ -45,13 +44,6 @@ const loadCategory = () => {
 
 const showCategory = categories => {
 	categoryContainer.innerHTML = "";
-
-	// categoryContainer.innerHTML += `
-	// <li id="all-tree">All Tree</li>
-	// `;
-	// *******
-
-	// *******
 	categories.forEach(li => {
 		// console.log(li);
 		categoryContainer.innerHTML += `
@@ -62,15 +54,18 @@ const showCategory = categories => {
 	categoryContainer.addEventListener("click", e => {
 		// console.log(e.target);
 		const allLi = document.querySelectorAll("li");
+		const tree = document.getElementById("all-tree");
+		console.log(tree);
 		allLi.forEach(li => {
 			li.classList.remove("bg-[#15803d]", "text-white", "rounded-lg");
 		});
 		// console.log(e.target.localName);
-		if (e.target.localName === "li") {
+		if (e.target.localName === "li" || tree) {
 			// console.log("li click");
 			e.target.classList.add("bg-[#15803d]", "text-white", "rounded-lg");
 		}
 		const id = e.target.id;
+		// console.log(id);
 		loadPlantByCategory(id);
 	});
 };
@@ -83,6 +78,7 @@ const loadPlantByCategory = id => {
 		.then(data => {
 			// console.log(data);
 			const plants = data.plants;
+
 			// console.log(plants);
 			showPlantByCategory(plants);
 		});
@@ -91,7 +87,7 @@ const loadPlantByCategory = id => {
 const showPlantByCategory = plants => {
 	treeContainer.innerHTML = "";
 	for (let plant of plants) {
-		// console.log(plant);
+		console.log(typeof plant);
 		treeContainer.innerHTML += `
                 <div class="bg-white shadow-md rounded-lg h-[490px]">
                 <div class="p-4">
@@ -101,7 +97,7 @@ const showPlantByCategory = plants => {
                 <p class="text-sm text-[#1f2937] my-2">${plant.description}</p>
                 <div class="flex justify-between">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${plant.category}</h1>
-                <p>${plant.price}</p>
+                <p class="price">${plant.price}</p>
                 </div>
                 <button class="bg-[#15803d] w-full text-white mt-3 py-2 rounded-full">Add to Cart</button>
                 </div>
@@ -109,6 +105,46 @@ const showPlantByCategory = plants => {
                 `;
 	}
 };
+const tree = document.getElementById("all-tree");
+
+let total = 0;
+treeContainer.addEventListener("click", e => {
+	// console.log(e.target.innerText);
+	if (e.target.innerText === "Add to Cart") {
+		const parent = e.target.closest(".card-parent");
+		const price = parent.querySelector(".price");
+		const name = parent.querySelector(".name").innerText;
+
+		const convertPrice = parseInt(price.innerHTML);
+
+		total += convertPrice;
+		console.log(total);
+		const cartContainer = document.getElementById("cart-container");
+
+		// const cartContainer = document.createElement("div")
+		// dispatchEvent.innerHTML=`
+
+		// `
+
+		cartContainer.innerHTML += `
+		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3">
+                    <div>
+                    <h1>${name}</h1>
+                    <p>${convertPrice}</p>
+                    </div>
+                    <div>
+                    <i class="fa-solid fa-xmark"></i>
+                    </div>
+                    </div>
+				
+		`;
+		if (totalContainer.style.display === "none") {
+			totalContainer.style.display = "block";
+		}
+		totalContainer.innerText = `total:${total}`;
+	}
+});
+
 loadCategory();
 loadAllTree();
 document.getElementById("all-tree").addEventListener("click", loadAllTree);
