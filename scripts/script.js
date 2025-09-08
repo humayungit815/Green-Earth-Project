@@ -2,6 +2,7 @@ const categoryContainer = document.getElementById("category-container");
 const treeContainer = document.getElementById("tree-container");
 const allTree = document.getElementById("all-tree");
 const totalContainer = document.getElementById("total-container");
+const modal = document.getElementById("modal");
 
 // load category
 
@@ -19,7 +20,7 @@ const loadAllTree = () => {
                 <img class="h-[200px] w-full object-cover rounded-md" src="${element.image}" />
 
                 <h1 class="text-lg font-bold mt-3 name">${element.name}</h1>
-                <p class="text-sm text-[#1f2937] my-2">${element.description}</p>
+                <p id="${element.id}" class="text-sm text-[#1f2937] my-2 description">${element.description}</p>
                 <div class="flex justify-between">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${element.category}</h1>
                 <p class="price">${element.price}</p>
@@ -28,6 +29,9 @@ const loadAllTree = () => {
                 </div>
                 </div>
                 `;
+
+				const id = element.id;
+				loadDetails(id);
 			}
 		});
 };
@@ -89,11 +93,11 @@ const showPlantByCategory = plants => {
 	for (let plant of plants) {
 		console.log(typeof plant);
 		treeContainer.innerHTML += `
-                <div class="bg-white shadow-md rounded-lg h-[490px]">
+                <div class="bg-white shadow-md rounded-lg h-[490px] card-parent">
                 <div class="p-4">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${plant.image}" />
 
-                <h1 class="text-lg font-bold mt-3">${plant.name}</h1>
+                <h1 class="text-lg font-bold mt-3 name">${plant.name}</h1>
                 <p class="text-sm text-[#1f2937] my-2">${plant.description}</p>
                 <div class="flex justify-between">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${plant.category}</h1>
@@ -136,7 +140,7 @@ treeContainer.addEventListener("click", e => {
 		if (totalContainer.style.display === "none") {
 			totalContainer.style.display = "block";
 		}
-		totalContainer.innerText = `total:${totalPrice}`;
+		totalContainer.innerHTML = `total:<i class="fa-solid fa-bangladeshi-taka-sign"></i>${totalPrice}`;
 	}
 
 	if (e.target.classList.contains("delete-btn")) {
@@ -166,6 +170,34 @@ cartContainer.addEventListener("click", e => {
 		}
 	}
 });
+
+treeContainer.addEventListener("click", e => {
+	if (e.target.classList.contains("description")) {
+		// console.log(e.target.id);
+		const plantId = e.target.getAttribute("id");
+		document.getElementById("my_modal_5").showModal();
+		console.log(plantId);
+		loadDetails(plantId);
+	}
+});
+
+const loadDetails = id => {
+	const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+	fetch(url)
+		.then(res => res.json())
+		.then(data => {
+			const allPlants = data.plants;
+			modal.innerHTML = "";
+			// console.log(allPlants);
+			modal.innerHTML += `
+			<h1 class="font-bold">${allPlants.name}</h1>
+			<img class="h-[250px] w-full object-cover rounded-lg mt-3" src="${allPlants.image}" />
+			<h1 class="my-3 font-semibold">${allPlants.category}</h1>
+			<p class="mb-3 font-semibold">${allPlants.price}</p>
+			<p>${allPlants.description}</p>
+			`;
+		});
+};
 
 loadCategory();
 loadAllTree();
