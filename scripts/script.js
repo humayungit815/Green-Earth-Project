@@ -15,17 +15,17 @@ const loadAllTree = () => {
 			treeContainer.innerHTML = "";
 			for (let element of elements.plants) {
 				treeContainer.innerHTML += `
-                 <div class="bg-white shadow-md rounded-lg h-[490px] card-parent">
-                <div class="p-4">
+                 <div class="bg-white shadow-md rounded-lg h-[490px] card-parent flex flex-col">
+                <div class="p-4 flex flex-col flex-1">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${element.image}" />
 
                 <h1 class="text-lg font-bold mt-3 name">${element.name}</h1>
-                <p id="${element.id}" class="text-sm text-[#1f2937] my-2 description">${element.description}</p>
-                <div class="flex justify-between">
+                <p id="${element.id}" class="text-sm text-[#1f2937] my-2 description flex-1">${element.description}</p>
+                <div class="flex justify-between items-center mb-3">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${element.category}</h1>
-                <p class="price">${element.price}</p>
+                <p class="price font-bold"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${element.price}</p>
                 </div>
-                <button class="bg-[#15803d] w-full text-white mt-3 py-2 rounded-full">Add to Cart</button>
+                <button class="bg-[#15803d] w-full text-white mt-auto py-2 rounded-full">Add to Cart</button>
                 </div>
                 </div>
                 `;
@@ -51,21 +51,23 @@ const showCategory = categories => {
 	categories.forEach(li => {
 		// console.log(li);
 		categoryContainer.innerHTML += `
-                <li id="${li.id}" class="mb-5 hover:bg-[#15803d] w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer">${li.category_name}</li>
+                <li id="${li.id}" class="mb-5 hover:bg-[#15803d] md:w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer">${li.category_name}</li>
                 `;
 	});
 	//
 	categoryContainer.addEventListener("click", e => {
 		// console.log(e.target);
+
 		const allLi = document.querySelectorAll("li");
 		const tree = document.getElementById("all-tree");
-		console.log(tree);
+		// console.log(tree);
 		allLi.forEach(li => {
 			li.classList.remove("bg-[#15803d]", "text-white", "rounded-lg");
 		});
 		// console.log(e.target.localName);
-		if (e.target.localName === "li" || tree) {
+		if (e.target.localName === "li") {
 			// console.log("li click");
+
 			e.target.classList.add("bg-[#15803d]", "text-white", "rounded-lg");
 		}
 		const id = e.target.id;
@@ -76,6 +78,7 @@ const showCategory = categories => {
 
 const loadPlantByCategory = id => {
 	treeContainer.innerHTML = "";
+	showLoading();
 	const url = `https://openapi.programming-hero.com/api/category/${id}`;
 	fetch(url)
 		.then(res => res.json())
@@ -91,22 +94,25 @@ const loadPlantByCategory = id => {
 const showPlantByCategory = plants => {
 	treeContainer.innerHTML = "";
 	for (let plant of plants) {
-		console.log(typeof plant);
+		// console.log(typeof plant);
 		treeContainer.innerHTML += `
-                <div class="bg-white shadow-md rounded-lg h-[490px] card-parent">
-                <div class="p-4">
+                <div class="bg-white shadow-md rounded-lg h-[490px] card-parent flex flex-col">
+                <div class="p-4 flex flex-col flex-1">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${plant.image}" />
 
                 <h1 class="text-lg font-bold mt-3 name">${plant.name}</h1>
-                <p class="text-sm text-[#1f2937] my-2">${plant.description}</p>
-                <div class="flex justify-between">
+                <p id="${plant.id}" class="text-sm text-[#1f2937] my-2 description flex-1">${plant.description}</p>
+                <div class="flex justify-between items-center mb-3">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${plant.category}</h1>
-                <p class="price">${plant.price}</p>
+                <p class="price font-bold"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${plant.price}</p>
                 </div>
-                <button class="bg-[#15803d] w-full text-white mt-3 py-2 rounded-full">Add to Cart</button>
+                <button class="bg-[#15803d] w-full text-white mt-auto py-2 rounded-full">Add to Cart</button>
                 </div>
                 </div>
                 `;
+		const id = plant.id;
+		console.log(id);
+		loadDetails(id);
 	}
 };
 const tree = document.getElementById("all-tree");
@@ -119,7 +125,7 @@ treeContainer.addEventListener("click", e => {
 		const price = parent.querySelector(".price");
 		const name = parent.querySelector(".name").innerText;
 
-		const convertPrice = parseInt(price.innerHTML);
+		const convertPrice = parseInt(price.innerText);
 
 		let totalPrice = parseInt((total += convertPrice));
 		// console.log(totalPrice);
@@ -128,11 +134,11 @@ treeContainer.addEventListener("click", e => {
 		cartContainer.innerHTML += `
 		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3 cart-item">
                     <div>
-                    <h1>${name}</h1>
+                    <h1 class="font-semibold">${name}</h1>
                     <p class="item-price">${convertPrice}</p>
                     </div>
                     <div>
-                    <i class="fa-solid fa-xmark delete-btn"></i>
+                    <i class="text-red-600 text-lg cursor-pointer fa-solid fa-xmark delete-btn"></i>
                     </div>
                     </div>
 				
@@ -140,7 +146,12 @@ treeContainer.addEventListener("click", e => {
 		if (totalContainer.style.display === "none") {
 			totalContainer.style.display = "block";
 		}
-		totalContainer.innerHTML = `total:<i class="fa-solid fa-bangladeshi-taka-sign"></i>${totalPrice}`;
+		totalContainer.innerHTML = `
+		<div class="flex items-center justify-between px-4">
+		<div><p class="font-bold">total:</p></div>
+		<div><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${total}</div>
+		</div>
+		`;
 	}
 
 	if (e.target.classList.contains("delete-btn")) {
@@ -166,7 +177,11 @@ cartContainer.addEventListener("click", e => {
 		if (cartContainer.children.length === 0) {
 			totalContainer.style.display = "none";
 		} else {
-			totalContainer.innerText = `Total: ${total}`;
+			// totalContainer.innerText = `Total: ${total}`;
+			totalContainer.innerHTML = `<div class="mb-5 flex items-center justify-between px-4">
+		<div><p class="font-bold">total:</p></div>
+		<div><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${total}</div>
+		</div>`;
 		}
 	}
 });
@@ -199,6 +214,14 @@ const loadDetails = id => {
 		});
 };
 
+const showLoading = () => {
+	treeContainer.innerHTML = `
+  <div>
+  <span class="loading loading-bars loading-lg"></span>
+  </div>
+	`;
+};
+
 loadCategory();
 loadAllTree();
-document.getElementById("all-tree").addEventListener("click", loadAllTree);
+// document.getElementById("all-tree").addEventListener("click", loadAllTree);
