@@ -117,23 +117,18 @@ treeContainer.addEventListener("click", e => {
 
 		const convertPrice = parseInt(price.innerHTML);
 
-		total += convertPrice;
-		console.log(total);
+		let totalPrice = parseInt((total += convertPrice));
+		// console.log(totalPrice);
+		// alert("money added");
 		const cartContainer = document.getElementById("cart-container");
-
-		// const cartContainer = document.createElement("div")
-		// dispatchEvent.innerHTML=`
-
-		// `
-
 		cartContainer.innerHTML += `
-		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3">
+		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3 cart-item">
                     <div>
                     <h1>${name}</h1>
-                    <p>${convertPrice}</p>
+                    <p class="item-price">${convertPrice}</p>
                     </div>
                     <div>
-                    <i class="fa-solid fa-xmark"></i>
+                    <i class="fa-solid fa-xmark delete-btn"></i>
                     </div>
                     </div>
 				
@@ -141,7 +136,34 @@ treeContainer.addEventListener("click", e => {
 		if (totalContainer.style.display === "none") {
 			totalContainer.style.display = "block";
 		}
-		totalContainer.innerText = `total:${total}`;
+		totalContainer.innerText = `total:${totalPrice}`;
+	}
+
+	if (e.target.classList.contains("delete-btn")) {
+		const item = e.target.closest("cart-item");
+		console.log(item);
+	}
+});
+
+// delete cart
+const cartContainer = document.getElementById("cart-container");
+// console.log(cartContainer);
+
+cartContainer.addEventListener("click", e => {
+	const target = e.target;
+	// console.log(target);
+	if (e.target.classList.contains("delete-btn")) {
+		const item = target.closest(".cart-item");
+		const totalContainer = document.getElementById("total-container");
+		const itemPrice = parseInt(item.querySelector(".item-price").innerText);
+		total -= itemPrice;
+		console.log(total);
+		item.remove();
+		if (cartContainer.children.length === 0) {
+			totalContainer.style.display = "none";
+		} else {
+			totalContainer.innerText = `Total: ${total}`;
+		}
 	}
 });
 
