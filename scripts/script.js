@@ -15,21 +15,20 @@ const loadAllTree = () => {
 			treeContainer.innerHTML = "";
 			for (let element of elements.plants) {
 				treeContainer.innerHTML += `
-                 <div class="bg-white shadow-md rounded-lg h-[490px] card-parent flex flex-col">
+                <div class="bg-white shadow-md rounded-lg  card-parent flex flex-col">
                 <div class="p-4 flex flex-col flex-1">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${element.image}" />
 
                 <h1 class="text-lg font-bold mt-3 name">${element.name}</h1>
-                <p id="${element.id}" class="text-sm text-[#1f2937] my-2 description flex-1">${element.description}</p>
+                <p id="${element.id}" class="text-sm leading-6 max-h-12 overflow-hidden my-2 description flex-1">${element.description}</p>
                 <div class="flex justify-between items-center mb-3">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${element.category}</h1>
-                <p class="price font-bold"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${element.price}</p>
+                <p class="price font-bold text-[#15803d]"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${element.price}</p>
                 </div>
                 <button class="bg-[#15803d] w-full text-white mt-auto py-2 rounded-full">Add to Cart</button>
                 </div>
                 </div>
                 `;
-
 				const id = element.id;
 				loadDetails(id);
 			}
@@ -51,28 +50,30 @@ const showCategory = categories => {
 	categories.forEach(li => {
 		// console.log(li);
 		categoryContainer.innerHTML += `
-                <li id="${li.id}" class="mb-5 hover:bg-[#15803d]  md:w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer">${li.category_name}</li>
+                <li id="${li.id}" class="mb-5 hover:bg-[#15803d]  md:w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer category">${li.category_name}</li>
                 `;
 	});
-	//
 	categoryContainer.addEventListener("click", e => {
 		// console.log(e.target);
 
-		const allLi = document.querySelectorAll("li");
-		const tree = document.getElementById("all-tree");
-		// console.log(tree);
-		allLi.forEach(li => {
-			li.classList.remove("bg-[#15803d]", "text-white", "rounded-lg");
-		});
-		// console.log(e.target.localName);
-		if (e.target.localName === "li") {
-			// console.log("li click");
+		if (e.target.classList.contains("category")) {
+			const allLi = document.querySelectorAll("li");
+			const tree = document.getElementById("all-tree");
+			// console.log(tree);
+			allLi.forEach(li => {
+				li.classList.remove("bg-[#15803d]", "text-white", "rounded-lg");
+			});
+			// console.log(e.target.localName);
+			if (e.target.localName === "li") {
+				// console.log("li click");
 
-			e.target.classList.add("bg-[#15803d]", "text-white", "rounded-lg");
+				e.target.classList.add("bg-[#15803d]", "text-white", "rounded-lg");
+			}
+
+			const id = e.target.id;
+			// console.log(id);
+			loadPlantByCategory(id);
 		}
-		const id = e.target.id;
-		// console.log(id);
-		loadPlantByCategory(id);
 	});
 };
 
@@ -96,22 +97,21 @@ const showPlantByCategory = plants => {
 	for (let plant of plants) {
 		// console.log(typeof plant);
 		treeContainer.innerHTML += `
-                <div class="bg-white shadow-md rounded-lg h-[490px] card-parent flex flex-col">
-                <div class="p-4 flex flex-col flex-1">
+                <div class="bg-white shadow-md rounded-lg h-[420px]  card-parent flex flex-col">
+                <div class="p-4 flex flex-col ">
                 <img class="h-[200px] w-full object-cover rounded-md" src="${plant.image}" />
-
                 <h1 class="text-lg font-bold mt-3 name">${plant.name}</h1>
-                <p id="${plant.id}" class="text-sm text-[#1f2937] my-2 description flex-1">${plant.description}</p>
+                <p id="${plant.id}" class="text-sm leading-6 max-h-12 overflow-hidden my-2 description flex-1">${plant.description}</p>
                 <div class="flex justify-between items-center mb-3">
                 <h1 class="bg-[#dcfce7] text-[#15803d] font-medium py-1 px-3 text-sm rounded-full">${plant.category}</h1>
-                <p class="price font-bold"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${plant.price}</p>
+                <p class="price font-bold text-[#15803d]"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${plant.price}</p>
                 </div>
                 <button class="bg-[#15803d] w-full text-white mt-auto py-2 rounded-full">Add to Cart</button>
                 </div>
                 </div>
                 `;
 		const id = plant.id;
-		console.log(id);
+		// console.log(id);
 		loadDetails(id);
 	}
 };
@@ -132,7 +132,7 @@ treeContainer.addEventListener("click", e => {
 		// alert("money added");
 		const cartContainer = document.getElementById("cart-container");
 		cartContainer.innerHTML += `
-		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3 cart-item">
+		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3 cart-item overflow-y-auto">
                     <div>
                     <h1 class="font-semibold">${name}</h1>
                     <p class="item-price"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${convertPrice}</p>
@@ -212,18 +212,18 @@ const loadDetails = id => {
 			modal.innerHTML += `
 			<h1 class="font-bold">${allPlants.name}</h1>
 			<img class="h-[250px] w-full object-cover rounded-lg mt-3" src="${allPlants.image}" />
-			<h1 class="my-3 font-semibold">${allPlants.category}</h1>
-			<p class="mb-3 font-semibold">${allPlants.price}</p>
-			<p>${allPlants.description}</p>
+			<h1 class="my-3"><span class="font-bold">Category:</span> ${allPlants.category}</h1>
+			<p class="mb-3 f"><span class="font-bold">Price:</span><i class="text-sm mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${allPlants.price}</p>
+			<p><span class="font-bold">Description:</span> ${allPlants.description}</p>
 			`;
 		});
 };
 
 const showLoading = () => {
 	treeContainer.innerHTML = `
-  <div>
-  <span class="loading loading-bars loading-lg"></span>
-  </div>
+   <div class="flex justify-center items-center w-[300%]">
+   <span class="loading loading-bars loading-lg"></span>
+   </div>
 	`;
 };
 

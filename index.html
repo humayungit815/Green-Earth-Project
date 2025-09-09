@@ -37,14 +37,14 @@
                 <li class="hover:border-b-2 hover:border-white cursor-pointer">Gallery</li>
                 <li class="hover:border-b-2 hover:border-white cursor-pointer">Plant a Tree</li>
             </ul>
-            <button class="bg-[#facc15] font-medium px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Plant
+            <button class="bg-[#facc15] font-semibold px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Plant
                 a
                 Tree</button>
         </nav>
     </header>
     <main class="">
         <!-- banner section -->
-        <section class="banner bg-[#cff0dc] py-10">
+        <section class="banner bg-[#cff0dc] py-10 md:py-0">
             <div class="flex justify-between items-center text-center">
                 <div>
                     <img class="hidden md:block" src="assets/hero-leaf1.png" alt="">
@@ -54,7 +54,7 @@
                     <p class="my-4 text-[#1f2937]">Join our mission to plant 1 million trees and make the Earth greener
                         for future
                         generations.</p>
-                    <button class="bg-[#facc15] font-medium px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Get
+                    <button class="bg-[#facc15] font-semibold px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Get
                         Involved</button>
                 </div>
                 <div>
@@ -65,29 +65,31 @@
 
 
         <section class="choose-tree  bg-[#f0fdf4] pt-[100px]">
-            <div class="grid grid-cols-1 md:grid-cols-5 max-w-[1400px] mx-auto gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-5 px-5  gap-5">
                 <div class="col-span-1 p-5 md:p-0">
                     <h1 class="text-lg font-bold mb-5">Categories</h1>
                     <div class="all-tree-container">
 
                     </div>
-                    <ul id="category-container">
+                    <ul id="category-container" class="md:text-center font-medium">
 
                     </ul>
                 </div>
                 <div id="tree-container"
-                    class="grid grid-cols-1 md:grid-cols-3 col-span-3 gap-5 place-items-center mx-auto w-[90%] md:w-full">
-                    <div>
+                    class="grid grid-cols-1 md:grid-cols-3 col-span-3 gap-5  mx-auto w-[90%] md:w-full">
+                    <div class="flex justify-center items-center w-[300%]">
                         <span class="loading loading-bars loading-lg"></span>
                     </div>
                 </div>
-                <div class="col-span-1 bg-white rounded-lg shadow-md w-[90%] md:w-full mx-auto">
+                <div
+                    class="col-span-1 bg-white rounded-lg shadow-md w-[90%] md:w-full mx-auto h-[250px] md:h-[500px] overflow-y-auto">
                     <h1 class="text-xl font-bold p-4">Your Cart</h1>
                     <div id="cart-container">
 
                     </div>
 
-                    <div id="total-container" style="display: none;" class="border-t-2 border-gray-300 w-[90%] mx-auto">
+                    <div id="total-container" style="display: none;"
+                        class="border-t-2 border-gray-300 w-[90%] mx-auto mb-5">
                         <h1>total:</h1>
                     </div>
                 </div>
@@ -146,11 +148,11 @@
                 <input type="text" placeholder="Your Email Address" class="input input-neutral" />
                 <select class="select select-neutral">
                     <option disabled selected>Number of Trees</option>
-                    <option>North America</option>
-                    <option>EU west</option>
-                    <option>South East Asia</option>
+                    <option>1 tree -5$</option>
+                    <option>5 tree -25$</option>
+                    <option>10 tree -50$</option>
                 </select>
-                <button class="bg-[#facc15] font-medium w-full py-1 rounded-full text-[#15803d] cursor-pointer">Donate
+                <button class="bg-[#facc15] font-semibold w-full py-1 rounded-full text-[#15803d] cursor-pointer">Donate
                     Now</button>
             </div>
         </section>
