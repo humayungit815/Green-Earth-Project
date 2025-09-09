@@ -28,13 +28,17 @@
 <body>
     <header class="bg-[#15803d]">
         <nav class="flex flex-col md:flex-row items-center space-y-3 justify-between text-white p-5">
-            <h1 class="text-lg font-bold">Green Earth</h1>
+            <div class="flex gap-2 items-center">
+                <img class="w-[60px]" src="assets/logo-removebg-preview.png" alt="">
+                <h1 class="text-lg font-bold">Green Earth</h1>
+            </div>
             <ul class="flex gap-5 font-normal">
                 <li class="hover:border-b-2 hover:border-white cursor-pointer">About</li>
                 <li class="hover:border-b-2 hover:border-white cursor-pointer">Gallery</li>
                 <li class="hover:border-b-2 hover:border-white cursor-pointer">Plant a Tree</li>
             </ul>
-            <button class="bg-[#facc15] font-medium px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Plant a
+            <button class="bg-[#facc15] font-medium px-4 py-1 rounded-full text-[#15803d] cursor-pointer">Plant
+                a
                 Tree</button>
         </nav>
     </header>
@@ -72,18 +76,18 @@
                     </ul>
                 </div>
                 <div id="tree-container"
-                    class="grid grid-cols-1 md:grid-cols-3 col-span-3 gap-5 place-items-center mx-auto">
+                    class="grid grid-cols-1 md:grid-cols-3 col-span-3 gap-5 place-items-center mx-auto w-[90%] md:w-full">
                     <div>
                         <span class="loading loading-bars loading-lg"></span>
                     </div>
                 </div>
-                <div class="col-span-1 bg-white rounded-lg shadow-md">
+                <div class="col-span-1 bg-white rounded-lg shadow-md w-[90%] md:w-full mx-auto">
                     <h1 class="text-xl font-bold p-4">Your Cart</h1>
                     <div id="cart-container">
 
                     </div>
 
-                    <div id="total-container" style="display: none;" class="text-end">
+                    <div id="total-container" style="display: none;" class="border-t-2 border-gray-300 w-[90%] mx-auto">
                         <h1>total:</h1>
                     </div>
                 </div>
@@ -137,7 +141,7 @@
 
         <section class="bg-[#166534] py-[80px]">
             <h1 class="text-3xl text-center font-bold text-white mb-[40px]">Plant a Tree Today</h1>
-            <div class="flex flex-col items-center mx-auto gap-3 bg-[#15803d] mx-w-100 md:w-100 p-10 rounded-lg">
+            <div class="flex flex-col items-center mx-auto gap-3 bg-[#15803d] w-[90%] md:w-100 p-10 rounded-lg">
                 <input type="text" placeholder="Your Name" class="input input-neutral" />
                 <input type="text" placeholder="Your Email Address" class="input input-neutral" />
                 <select class="select select-neutral">

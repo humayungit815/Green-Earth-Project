@@ -51,7 +51,7 @@ const showCategory = categories => {
 	categories.forEach(li => {
 		// console.log(li);
 		categoryContainer.innerHTML += `
-                <li id="${li.id}" class="mb-5 hover:bg-[#15803d] md:w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer">${li.category_name}</li>
+                <li id="${li.id}" class="mb-5 hover:bg-[#15803d]  md:w-[70%] px-2 py-1 hover:text-white hover:rounded-lg cursor-pointer">${li.category_name}</li>
                 `;
 	});
 	//
@@ -135,7 +135,7 @@ treeContainer.addEventListener("click", e => {
 		            <div class="flex justify-between bg-[#f0fdf4] p-4 mx-3 items-center rounded-lg mb-3 cart-item">
                     <div>
                     <h1 class="font-semibold">${name}</h1>
-                    <p class="item-price">${convertPrice}</p>
+                    <p class="item-price"><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${convertPrice}</p>
                     </div>
                     <div>
                     <i class="text-red-600 text-lg cursor-pointer fa-solid fa-xmark delete-btn"></i>
@@ -178,9 +178,14 @@ cartContainer.addEventListener("click", e => {
 			totalContainer.style.display = "none";
 		} else {
 			// totalContainer.innerText = `Total: ${total}`;
-			totalContainer.innerHTML = `<div class="mb-5 flex items-center justify-between px-4">
-		<div><p class="font-bold">total:</p></div>
-		<div><i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${total}</div>
+			totalContainer.innerHTML = `
+		<div class="flex items-center justify-between px-4">
+		<div>
+		<p class="font-bold">total:</p>
+		</div>
+		<div>
+		<i class="mx-1 fa-solid fa-bangladeshi-taka-sign"></i>${total}
+		</div>
 		</div>`;
 		}
 	}
@@ -224,4 +229,3 @@ const showLoading = () => {
 
 loadCategory();
 loadAllTree();
-// document.getElementById("all-tree").addEventListener("click", loadAllTree);
