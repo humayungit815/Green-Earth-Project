@@ -23,4 +23,4 @@ Green Earth is an eco-friendly platform where users can buy trees, track their g
 ## 🚀 Getting Started
 1. Clone the repo  
    ```bash
-   git clone https://github.com/username/repo.git
+   git clone https://github.com/humayungit815/Green-Earth-Project.git
